@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEALOTS | All in. No Compromise</title>
+    <style>
+        #intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 1s ease-out 3s forwards;
+        }
+        #intro h1 {
+            font-size: 5rem;
+            color: white;
+            font-family: 'Arial Black', sans-serif;
+            letter-spacing: 0.2em;
+            animation: zoomIn 3s ease-out forwards;
+            opacity: 0;
+        }
+        @keyframes zoomIn {
+            0% { opacity: 0; transform: scale(2); filter: blur(10px); }
+            60% { opacity: 1; transform: scale(1); filter: blur(0); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+        body.loaded #intro {
+            display: none;
+        }
+        :root {
+            --primary: #e71f1f;
+            --secondary: #8a0000;
+            --accent: #ffc107;
+            --accent-secondary: #ff6b00;
+            --dark: #111111;
+            --light: #f8f8f8;
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: radial-gradient(circle at top right, #1a1a1a, var(--dark));
+            color: var(--light);
+            line-height: 1.6;
+            background-attachment: fixed;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(231, 31, 31, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            height: 60px;
+            margin-right: 15px;
+        }
+        .site-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        .tagline {
+            font-size: 1rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav ul li {
+            margin-left: 30px;
+        }
+        nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/600') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(231, 31, 31, 0.3) 0%, transparent 70%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--light);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .hero-content h1 span {
+            color: var(--primary);
+        }
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--gradient-primary);
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(231, 31, 31, 0.3);
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient-accent);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+        .btn:hover {
+            color: var(--light);
+            border-color: var(--accent);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
+        }
+        .btn:hover::before {
+            width: 100%;
+        }
+        section {
+            padding: 100px 0;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+            box-shadow: 0 3px 10px rgba(255, 193, 7, 0.3);
+        }
+        .game-container {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        #game-canvas {
+            border: 2px solid var(--primary);
+            border-radius: 5px;
+        }
+        #game-info {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        .footer-logo {
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        .footer-links {
+            margin-bottom: 30px;
+        }
+        .footer-links a {
+            color: var(--light);
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        .copyright {
+            color: #999;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .site-title { font-size: 1.8rem; }
+            .tagline { font-size: 0.8rem; }
+            nav ul { display: none; }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1.2rem; }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+</head>
+<body>
+    <div id="intro">
+        <h1>ZEALOTS</h1>
+    </div>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo-container">
+                    <img src="logo.jpg" alt="Zealots Logo" class="logo">
+                    <div>
+                        <div class="site-title">ZEALOTS</div>
+                        <div class="tagline">All in. No Compromise</div>
+                    </div>
+                </div>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#game">Play</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Unleash Your <span>ZEAL</span></h1>
+            <p>Test your passion with our fiery puzzle challenge. Slide tiles to form a blazing heart and earn Zeal Points!</p>
+            <a href="#game" class="btn">Play Now</a>
+        </div>
+    </section>
+    <section id="game" class="container">
+        <h2 class="section-title">Zealots Puzzle</h2>
+        <div class="game-container">
+            <div id="game-canvas"></div>
+            <div id="game-info">
+                <p>Zeal Points: <span id="points">0</span> | Moves: <span id="moves">0</span></p>
+                <button class="btn" id="reset-game">Reset Puzzle</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <img src="logo.jpg" alt="Zealots Logo" class="footer-logo">
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#game">Play</a>
+            </div>
+            <div class="copyright">
+                &copy; <span id="current-year">2025</span> Zealots. All Rights Reserved.
+            </div>
+        </div>
+        <div class="social-links">
+            <a href="https://youtube.com/@zealots-g4f?si=KTa-vbgRpfBVdq0F" target="_blank">YouTube</a> |
+            <a href="https://ig.me/j/AbbiOfMQof9Z1iIr/" target="_blank">Instagram</a> |
+            <a href="https://snapchat.com/t/QtlHzFbP" target="_blank">Snapchat</a>
+        </div>
+    </footer>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 4000);
+        });
+
+        // p5.js Sliding Tile Puzzle
+        let board = [];
+        let size = 4;
+        let tileSize = 100;
+        let emptyPos = { x: size - 1, y: size - 1 };
+        let points = 0;
+        let moves = 0;
+
+        function setup() {
+            let canvas = createCanvas(size * tileSize, size * tileSize);
+            canvas.parent('game-canvas');
+            initBoard();
+            document.getElementById('reset-game').addEventListener('click', resetGame);
+        }
+
+        function initBoard() {
+            board = [];
+            let nums = [];
+            for (let i = 1; i < size * size; i++) nums.push(i);
+            nums.push(0);
+            nums = shuffleArray(nums);
+            for (let i = 0; i < size; i++) {
+                let row = [];
+                for (let j = 0; j < size; j++) {
+                    row.push(nums[i * size + j]);
+                    if (nums[i * size + j] === 0) emptyPos = { x: j, y: i };
+                }
+                board.push(row);
+            }
+        }
+
+        function draw() {
+            background(20);
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    if (board[i][j] !== 0) {
+                        fill(231, 31, 31);
+                        stroke(255);
+                        rect(j * tileSize, i * tileSize, tileSize, tileSize);
+                        fill(255);
+                        textAlign(CENTER, CENTER);
+                        textSize(32);
+                        text(board[i][j], j * tileSize + tileSize / 2, i * tileSize + tileSize / 2);
+                    }
+                }
+            }
+            if (isSolved()) {
+                points += 100 - moves;
+                document.getElementById('points').textContent = points;
+                noLoop();
+            }
+        }
+
+        function mousePressed() {
+            let x = floor(mouseX / tileSize);
+            let y = floor(mouseY / tileSize);
+            if (x >= 0 && x < size && y >= 0 && y < size) {
+                if (abs(x - emptyPos.x) + abs(y - emptyPos.y) === 1) {
+                    board[emptyPos.y][emptyPos.x] = board[y][x];
+                    board[y][x] = 0;
+                    emptyPos = { x, y };
+                    moves++;
+                    document.getElementById('moves').textContent = moves;
+                }
+            }
+        }
+
+        function isSolved() {
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    if (board[i][j] !== (i * size + j + 1) % (size * size)) return false;
+                }
+            }
+            return true;
+        }
+
+        function resetGame() {
+            initBoard();
+            moves = 0;
+            document.getElementById('moves').textContent = moves;
+            loop();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+    </script>
